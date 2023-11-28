@@ -1,20 +1,24 @@
-#!/bin/bash
+#! /bin/bash
 
-# Created by Blaise
+#Author: Blaise
+#DAte:   28 Nov, 2023
+#Decription: "Installation of jenkins server on ubuntu"
 
-# Install docker in centos
-# Remove any old versions
-sudo yum remove docker docker-common docker-selinux docker-engine
 
-# Install required packages
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+## update system
+sudo apt-get update
 
-# Configure docker repository
-sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+# Install Java SDK 11
+sudo apt-get install openjdk-11-jdk -y
 
-# Install Docker-ce
-sudo yum install docker-ce -y
+# Download and Install Jenkins
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins -y
 
-# Start Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+# Start Jenkins
+sudo systemctl start jenkins
+
+# Enable Jenkins to run on Boot
+sudo systemctl enable jenkins
